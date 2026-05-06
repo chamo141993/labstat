@@ -1,4 +1,4 @@
-# Week 6 Progress Report: 5G Lab Telemetry Implementation & Personnel Security
+# Week 6 Progress Report: 5G Lab Monitor (labstat)
 
 ## What I Did
 This week focused on moving Phase 1 and Phase 2 of the 5G Lab Monitoring Dashboard from architectural theory into deployed reality, while enforcing strict access controls at every layer. 
