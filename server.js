@@ -8,6 +8,7 @@ const apiKey = process.env.API_KEY || 'YOUR_API_KEY';
 const labState = {
   node: 'ran_ric',
   status: {
+    core: 'unknown',
     ocudu: 'unknown',
     ric: 'unknown',
   },

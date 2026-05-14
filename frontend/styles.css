@@ -1,0 +1,150 @@
+:root {
+  color-scheme: dark;
+  --bg: #07111f;
+  --panel: #0f1c2c;
+  --panel-border: #21324a;
+  --text: #e6eef8;
+  --muted: #91a4bc;
+  --up: #13c37b;
+  --down: #ef4444;
+  --unknown: #f59e0b;
+  --shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Inter, Arial, sans-serif;
+  background: radial-gradient(circle at top, #10233b 0%, var(--bg) 55%);
+  color: var(--text);
+}
+
+.dashboard-shell {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 48px 20px 64px;
+}
+
+.hero {
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  color: #7dd3fc;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.8rem;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+}
+
+.subtitle {
+  margin: 14px 0 0;
+  max-width: 620px;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.meta-panel,
+.status-card,
+.error-banner {
+  background: rgba(15, 28, 44, 0.88);
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+}
+
+.meta-panel {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 22px;
+  padding: 18px 20px;
+}
+
+.meta-loading {
+  color: #93c5fd;
+}
+
+.meta-live {
+  color: #86efac;
+}
+
+.error-banner {
+  margin-bottom: 22px;
+  padding: 14px 18px;
+  color: #fecaca;
+  border-color: rgba(239, 68, 68, 0.45);
+}
+
+.card-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.status-card {
+  padding: 22px;
+}
+
+.status-label {
+  font-size: 0.95rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.status-pill {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.status-detail {
+  margin-top: 18px;
+  color: #c3d2e3;
+  line-height: 1.5;
+}
+
+.status-up .status-pill {
+  background: rgba(19, 195, 123, 0.15);
+  color: #86efac;
+}
+
+.status-down .status-pill {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+}
+
+.status-partial .status-pill {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fcd34d;
+}
+
+.status-unknown .status-pill {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fcd34d;
+}
+
+@media (max-width: 640px) {
+  .dashboard-shell {
+    padding-top: 32px;
+  }
+
+  .meta-panel,
+  .status-card,
+  .error-banner {
+    border-radius: 16px;
+  }
+}
