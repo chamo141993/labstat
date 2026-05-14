@@ -11,8 +11,8 @@ OPEN5GS_SERVICES = [
     "open5gs-smfd",
     "open5gs-upfd",
 ]
-POST_URL = "https://your-render-app.onrender.com/update-status"
-API_KEY = "YOUR_API_KEY"
+POST_URL = "https://labstat.onrender.com"
+API_KEY = "F75E319669CAED3829402DDCD7995507"
 CHECK_INTERVAL_SECONDS = 5
 REQUEST_TIMEOUT_SECONDS = 5
 
