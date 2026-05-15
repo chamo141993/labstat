@@ -3,7 +3,7 @@ const cors = require('cors');
 
 const app = express();
 const port = parseInt(process.env.PORT || '3000', 10);
-const apiKey = process.env.API_KEY || 'YOUR_API_KEY';
+const apiKey = process.env.API_KEY || 'F75E319669CAED3829402DDCD7995507';
 
 const labState = {
   node: 'ran_ric',
