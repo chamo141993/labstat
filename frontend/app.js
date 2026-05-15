@@ -57,7 +57,7 @@ function App() {
 
     async function fetchStatus() {
       try {
-        const response = await fetch(`${https://5glabstat.netlify.app/}/network-status`, {
+        const response = await fetch(`${API_BASE_URL}/network-status`, {
           method: 'GET',
           headers: {
             Accept: 'application/json',
