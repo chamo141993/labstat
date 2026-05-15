@@ -1,4 +1,4 @@
-const API_BASE_URL = window.LABSTAT_API_BASE_URL || 'https://your-render-app.onrender.com';
+const API_BASE_URL = window.LABSTAT_API_BASE_URL || 'https://labstat.onrender.com';
 const POLL_INTERVAL_MS = 5000;
 
 const { useEffect, useMemo, useState } = React;
