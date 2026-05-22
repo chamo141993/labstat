@@ -11,7 +11,7 @@ OPEN5GS_SERVICES = [
     "open5gs-smfd",
     "open5gs-upfd",
 ]
-POST_URL = "https://labstat.onrender.com"
+POST_URL = "https://labstat.onrender.com/update-status"
 API_KEY = "F75E319669CAED3829402DDCD7995507"
 CHECK_INTERVAL_SECONDS = 5
 REQUEST_TIMEOUT_SECONDS = 5
@@ -72,6 +72,7 @@ def post_status(payload):
             data=json.dumps(payload),
             timeout=REQUEST_TIMEOUT_SECONDS,
         )
+        response.raise_for_status()
         print(f"[post] status={response.status_code} payload={json.dumps(payload)}")
     except requests.RequestException as exc:
         print(f"[post] failed to push telemetry: {exc}")

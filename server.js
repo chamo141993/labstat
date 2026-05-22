@@ -51,6 +51,14 @@ app.post('/update-status', requireApiKey, (req, res) => {
   return res.status(200).json({ ok: true });
 });
 
+app.get('/', (req, res) => {
+  return res.json({
+    service: 'labstat-backend',
+    statusEndpoint: '/network-status',
+    updateEndpoint: '/update-status',
+  });
+});
+
 app.get('/network-status', (req, res) => {
   return res.json(labState);
 });
