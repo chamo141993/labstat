@@ -3,7 +3,7 @@ const cors = require('cors');
 
 const app = express();
 const port = parseInt(process.env.PORT || '3000', 10);
-const apiKey = process.env.API_KEY || 'F75E319669CAED3829402DDCD7995507';
+const apiKey = (process.env.API_KEY || 'f75e319669caed3829402ddcd7995507').trim();
 
 const labState = {
   node: 'ran_ric',
@@ -19,7 +19,7 @@ app.use(cors());
 app.use(express.json({ limit: '32kb' }));
 
 function requireApiKey(req, res, next) {
-  const authHeader = req.get('Authorization') || '';
+  const authHeader = (req.get('Authorization') || '').trim();
   const expectedHeader = `Bearer ${apiKey}`;
 
   if (authHeader !== expectedHeader) {

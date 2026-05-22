@@ -9,7 +9,7 @@ import requests
 GNB_COMMAND_MATCH = "gnb -c gnb_rf_b200_tdd_n78_20mhz.yml"
 RIC_CONTAINERS = {"e2term", "e2mgr", "rtmgr"}
 POST_URL = "https://labstat.onrender.com/update-status"
-API_KEY = "F75E319669CAED3829402DDCD7995507"
+API_KEY = "f75e319669caed3829402ddcd7995507"
 CHECK_INTERVAL_SECONDS = 5
 REQUEST_TIMEOUT_SECONDS = 5
 
