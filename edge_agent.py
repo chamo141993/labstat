@@ -6,8 +6,8 @@ import time
 
 import requests
 
-GNB_COMMAND_MATCH = "gnb -c gnb_rf_b200_tdd_n78_20mhz.yml"
-RIC_CONTAINERS = {"e2term", "e2mgr", "rtmgr"}
+GNB_COMMAND_MATCH = "gnb.*-c.*gnb_rf_b200_tdd_n78_20mhz.yml"
+RIC_CONTAINER_PATTERNS = {"e2term", "e2mgr", "rtmgr"}
 POST_URL = "https://labstat.onrender.com/update-status"
 API_KEY = "f75e319669caed3829402ddcd7995507"
 CHECK_INTERVAL_SECONDS = 5
@@ -38,12 +38,17 @@ def check_ric_status():
             text=True,
             check=True,
         )
-        running_containers = {
-            line.strip() for line in result.stdout.splitlines() if line.strip()
-        }
-        missing = sorted(RIC_CONTAINERS - running_containers)
+        running_containers = [
+            line.strip().lower() for line in result.stdout.splitlines() if line.strip()
+        ]
+        missing = sorted(
+            pattern
+            for pattern in RIC_CONTAINER_PATTERNS
+            if not any(pattern in container for container in running_containers)
+        )
         if missing:
-            print(f"[ric] missing containers: {', '.join(missing)}")
+            print(f"[ric] missing container patterns: {', '.join(missing)}")
+            print(f"[ric] running containers: {', '.join(running_containers) or 'none'}")
             return "down"
         return "up"
     except FileNotFoundError as exc:
