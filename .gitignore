@@ -1,1 +1,8 @@
 .omx/
+.env
+.env.*
+!/.env.example
+__pycache__/
+*.pyc
+node_modules/
+npm-debug.log*

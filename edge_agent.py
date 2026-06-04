@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import json
+import os
 import subprocess
 import time
 
@@ -8,8 +9,8 @@ import requests
 
 GNB_COMMAND_MATCH = "gnb.*-c.*gnb_rf_b200_tdd_n78_20mhz.yml"
 RIC_CONTAINER_PATTERNS = {"e2term", "e2mgr", "rtmgr"}
-POST_URL = "https://labstat.onrender.com/update-status"
-API_KEY = "f75e319669caed3829402ddcd7995507"
+POST_URL = os.environ.get("LABSTAT_POST_URL", "https://labstat.onrender.com/update-status")
+API_KEY = os.environ.get("LABSTAT_API_KEY", "YOUR_API_KEY")
 CHECK_INTERVAL_SECONDS = 5
 REQUEST_TIMEOUT_SECONDS = 5
 
@@ -70,7 +71,20 @@ def build_payload():
     }
 
 
+def is_configured():
+    if not API_KEY or API_KEY == "YOUR_API_KEY":
+        print("[config] LABSTAT_API_KEY is not set; skipping telemetry POST")
+        return False
+    if not POST_URL:
+        print("[config] LABSTAT_POST_URL is not set; skipping telemetry POST")
+        return False
+    return True
+
+
 def post_status(payload):
+    if not is_configured():
+        return
+
     headers = {
         "Authorization": f"Bearer {API_KEY}",
         "Content-Type": "application/json",

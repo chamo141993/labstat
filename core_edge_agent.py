@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import json
+import os
 import re
 import subprocess
 import time
@@ -12,8 +13,8 @@ OPEN5GS_SERVICES = [
     "open5gs-smfd",
     "open5gs-upfd",
 ]
-POST_URL = "https://labstat.onrender.com/update-status"
-API_KEY = "f75e319669caed3829402ddcd7995507"
+POST_URL = os.environ.get("LABSTAT_POST_URL", "https://labstat.onrender.com/update-status")
+API_KEY = os.environ.get("LABSTAT_API_KEY", "YOUR_API_KEY")
 CHECK_INTERVAL_SECONDS = 5
 REQUEST_TIMEOUT_SECONDS = 5
 AMF_LOG_PATTERN = re.compile(r"Number of gNB-UEs is now (\d+)")
@@ -112,7 +113,20 @@ def build_payload():
     }
 
 
+def is_configured():
+    if not API_KEY or API_KEY == "YOUR_API_KEY":
+        print("[config] LABSTAT_API_KEY is not set; skipping telemetry POST")
+        return False
+    if not POST_URL:
+        print("[config] LABSTAT_POST_URL is not set; skipping telemetry POST")
+        return False
+    return True
+
+
 def post_status(payload):
+    if not is_configured():
+        return
+
     headers = {
         "Authorization": f"Bearer {API_KEY}",
         "Content-Type": "application/json",

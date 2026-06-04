@@ -115,6 +115,29 @@ Core agent with UE count:
 
 The Netlify-hosted frontend polls `/network-status` and displays the current lab status in a clear demo-friendly UI.
 
+## Secret Configuration
+
+Do not commit live API keys. Configure secrets with environment variables instead:
+
+Backend / Render:
+
+```bash
+API_KEY=your-rotated-random-key
+CORS_ORIGIN=https://your-netlify-site.netlify.app
+```
+
+Edge agents:
+
+```bash
+export LABSTAT_API_KEY=your-rotated-random-key
+export LABSTAT_POST_URL=https://labstat.onrender.com/update-status
+python3 edge_agent.py
+# or
+python3 core_edge_agent.py
+```
+
+Use `.env.example` as a template only. Never commit `.env` files.
+
 ## Notes
 
 - The current backend keeps status in memory, so data resets on restart or redeploy.
