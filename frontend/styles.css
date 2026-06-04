@@ -117,6 +117,13 @@ h1 {
   line-height: 1.5;
 }
 
+.metric-value {
+  margin-top: 18px;
+  font-size: 3rem;
+  font-weight: 800;
+  color: #bfdbfe;
+}
+
 .status-up .status-pill {
   background: rgba(19, 195, 123, 0.15);
   color: #86efac;

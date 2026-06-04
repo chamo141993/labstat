@@ -11,6 +11,7 @@ const labState = {
     core: 'unknown',
     ocudu: 'unknown',
     ric: 'unknown',
+    ue_count: null,
   },
   lastUpdated: null,
 };

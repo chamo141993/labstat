@@ -42,12 +42,13 @@ Responsibilities:
 - container deployment using a distroless production image
 
 ### 3) Public Dashboard (Netlify / React)
-A static frontend will poll the cloud backend and show live status for:
+A static frontend polls the cloud backend and shows live status for:
 - Core
 - RAN
 - RIC
+- connected UE count from Open5GS AMF logs
 
-The intended presentation is simple green/red health cards suitable for public viewing.
+The presentation is simple green/red health cards plus a UE count metric suitable for public viewing.
 
 ## Security Goals
 
@@ -61,11 +62,15 @@ This project is intentionally designed around secure systems administration prin
 
 ## Current Repository Contents
 
-### Phase 1: Edge Agent
+### Phase 1: Edge Agents
 - `edge_agent.py`
   - monitors the specific SRS gNB process on the RAN/RIC laptop
   - checks for Near-RT RIC containers (`e2term`, `e2mgr`, `rtmgr`)
   - sends JSON status updates to the cloud backend every 5 seconds
+- `core_edge_agent.py`
+  - checks Open5GS core services (`open5gs-amfd`, `open5gs-smfd`, `open5gs-upfd`)
+  - parses AMF logs for `Number of gNB-UEs is now X`
+  - reports Core health and connected UE count to the cloud backend
 
 ### Phase 2: Cloud Backend
 - `server.js`
@@ -80,7 +85,9 @@ This project is intentionally designed around secure systems administration prin
   - Node.js Alpine builder stage
   - Google Distroless production stage
 
-## Example Telemetry Payload
+## Example Telemetry Payloads
+
+RAN/RIC agent:
 
 ```json
 {
@@ -92,13 +99,24 @@ This project is intentionally designed around secure systems administration prin
 }
 ```
 
-## Planned Next Step
+Core agent with UE count:
 
-### Phase 3: Public Dashboard
-Build a lightweight Netlify-hosted frontend that polls `/network-status` and displays the current lab status in a clear demo-friendly UI.
+```json
+{
+  "node": "core",
+  "status": {
+    "core": "up",
+    "ue_count": 1
+  }
+}
+```
+
+## Current Dashboard
+
+The Netlify-hosted frontend polls `/network-status` and displays the current lab status in a clear demo-friendly UI.
 
 ## Notes
 
 - The current backend keeps status in memory, so data resets on restart or redeploy.
 - Placeholder secrets and URLs must be replaced before deployment.
-- A second edge agent for the Open5GS Core host can be added next to report Core service health.
+- `ue_count` is parsed from recent AMF logs; if the AMF log message has not appeared recently or the agent lacks log read permission, the dashboard will show an unknown UE count.

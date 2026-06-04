@@ -29,12 +29,37 @@ function formatTimestamp(value) {
   return date.toLocaleString();
 }
 
+function normalizeUeCount(value) {
+  if (Number.isInteger(value) && value >= 0) {
+    return value;
+  }
+
+  if (typeof value === 'string' && value.trim() !== '') {
+    const parsed = Number.parseInt(value, 10);
+    if (Number.isInteger(parsed) && parsed >= 0) {
+      return parsed;
+    }
+  }
+
+  return null;
+}
+
 function StatusCard({ label, value, detail }) {
   return React.createElement(
     'section',
     { className: `status-card status-${value}` },
     React.createElement('div', { className: 'status-label' }, label),
     React.createElement('div', { className: 'status-pill' }, value.toUpperCase()),
+    React.createElement('div', { className: 'status-detail' }, detail)
+  );
+}
+
+function MetricCard({ label, value, detail }) {
+  return React.createElement(
+    'section',
+    { className: 'status-card metric-card' },
+    React.createElement('div', { className: 'status-label' }, label),
+    React.createElement('div', { className: 'metric-value' }, value === null ? '—' : value),
     React.createElement('div', { className: 'status-detail' }, detail)
   );
 }
@@ -46,6 +71,7 @@ function App() {
       core: 'unknown',
       ocudu: 'unknown',
       ric: 'unknown',
+      ue_count: null,
     },
     lastUpdated: null,
   });
@@ -79,6 +105,7 @@ function App() {
             core: normalizeStatus(data?.status?.core),
             ocudu: normalizeStatus(data?.status?.ocudu),
             ric: normalizeStatus(data?.status?.ric),
+            ue_count: normalizeUeCount(data?.status?.ue_count),
           },
           lastUpdated: data?.lastUpdated || null,
         });
@@ -167,7 +194,12 @@ function App() {
           value: card.value,
           detail: card.detail,
         })
-      )
+      ),
+      React.createElement(MetricCard, {
+        label: 'Connected UEs',
+        value: state.status.ue_count,
+        detail: 'Latest Open5GS AMF gNB-UE count from Laptop 2 logs',
+      })
     )
   );
 }
